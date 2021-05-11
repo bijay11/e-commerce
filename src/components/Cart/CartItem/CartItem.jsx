@@ -9,9 +9,9 @@ import {
 } from "@material-ui/core";
 import useStyles from "./styles";
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
   const classes = useStyles();
-  console.log("image", item);
+
   return (
     <Card>
       <CardMedia
@@ -19,7 +19,7 @@ const CartItem = ({ item }) => {
         alt={item.name}
         className={classes.media}
       />
-      <CardContent classes={classes.cardContent}>
+      <CardContent className={classes.cardContent}>
         <Typography variant="h4">{item.name}</Typography>
         <Typography variant="h5">
           {item.line_total.formatted_with_symbol}
@@ -27,15 +27,28 @@ const CartItem = ({ item }) => {
       </CardContent>
       <CardActions classes={classes.cardActions}>
         <div className={classes.buttons}>
-          <Button type="button" size="small">
+          <Button
+            type="button"
+            size="small"
+            onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}
+          >
             -
           </Button>
           <Typography>{item.quantity}</Typography>
-          <Button type="button" size="small">
+          <Button
+            type="button"
+            size="small"
+            onClick={() => onUpdateCartQty(item.id, item.quantity + 1)}
+          >
             +
           </Button>
         </div>
-        <Button variant="contained" type="button" color="secondary">
+        <Button
+          variant="contained"
+          type="button"
+          color="secondary"
+          onClick={() => onRemoveFromCart(item.id)}
+        >
           Remove
         </Button>
       </CardActions>
